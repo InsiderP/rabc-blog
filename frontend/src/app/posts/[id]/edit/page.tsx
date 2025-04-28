@@ -6,13 +6,15 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useEffect } from 'react';
 import { posts } from '@/lib/api';
 import PostForm from '@/components/PostForm';
+import { use } from 'react';
 
 export default function EditPostPage({ params }: { params: { id: string } }) {
   const { user } = useAuth();
   const router = useRouter();
+  const unwrappedParams = use(params);
   const { data: post, isLoading } = useQuery({
-    queryKey: ['post', params.id],
-    queryFn: () => posts.getOne(params.id),
+    queryKey: ['post', unwrappedParams.id],
+    queryFn: () => posts.getOne(unwrappedParams.id),
   });
 
   useEffect(() => {
